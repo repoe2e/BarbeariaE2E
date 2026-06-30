@@ -46,6 +46,28 @@ start-frontend.bat
 
 O Vite faz proxy das chamadas `/api` para `http://localhost:8080`. **O backend precisa estar rodando** (`start-backend.bat` ou `mvn spring-boot:run`).
 
+### `stop.bat` — Parar aplicação
+
+Encerra processos pelas portas **8080** (backend) e **5173** (frontend).
+
+**Menu interativo** (duplo clique ou sem argumentos):
+```bash
+stop.bat
+```
+
+**Por argumento:**
+```bash
+stop.bat backend    # ou: back, b
+stop.bat frontend   # ou: front, f
+stop.bat all        # ou: both, a
+```
+
+Atalhos:
+```bash
+stop-backend.bat    # equivale a stop.bat backend
+stop-frontend.bat   # equivale a stop.bat frontend
+```
+
 ---
 
 ## Desenvolvimento com hot reload
@@ -109,5 +131,8 @@ barbearia_e2e/
 ├── frontend/         # React + Vite
 ├── start.bat         # Build + backend (porta 8080)
 ├── start-backend.bat # API apenas
-└── start-frontend.bat# Frontend dev (porta 5173)
+├── start-frontend.bat# Frontend dev (porta 5173)
+├── stop.bat          # Parar backend, frontend ou ambos
+├── stop-backend.bat  # Parar backend
+└── stop-frontend.bat # Parar frontend
 ```
