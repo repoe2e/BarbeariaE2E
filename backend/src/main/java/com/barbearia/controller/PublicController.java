@@ -2,6 +2,7 @@ package com.barbearia.controller;
 
 import com.barbearia.model.ContatoInfo;
 import com.barbearia.repository.InMemoryStore;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/public")
+@Tag(name = "Público", description = "Informações públicas da barbearia")
 public class PublicController {
 
     private final InMemoryStore store;

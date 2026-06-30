@@ -19,7 +19,9 @@ public class SpaConfig implements WebMvcConfigurer {
                 .addResolver(new PathResourceResolver() {
                     @Override
                     protected Resource getResource(String resourcePath, Resource location) throws IOException {
-                        if (resourcePath.startsWith("api/")) {
+                        if (resourcePath.startsWith("api/")
+                                || resourcePath.startsWith("swagger-ui")
+                                || resourcePath.startsWith("v3/")) {
                             return null;
                         }
                         Resource requested = location.createRelative(resourcePath);

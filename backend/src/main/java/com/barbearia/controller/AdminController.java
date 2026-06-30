@@ -4,6 +4,7 @@ import com.barbearia.dto.*;
 import com.barbearia.model.*;
 import com.barbearia.service.AdminService;
 import com.barbearia.service.AgendamentoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
+@Tag(name = "Admin", description = "Endpoints administrativos (requer autenticação Bearer)")
 public class AdminController {
 
     private final AdminService adminService;

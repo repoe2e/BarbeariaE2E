@@ -5,6 +5,7 @@ import com.barbearia.model.Barbeiro;
 import com.barbearia.service.AgendamentoService;
 import com.barbearia.service.AvaliacaoService;
 import com.barbearia.repository.InMemoryStore;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/agendamentos")
+@Tag(name = "Agendamentos", description = "Agendamento, horários, serviços e avaliações do cliente")
 public class AgendamentoController {
 
     private final AgendamentoService agendamentoService;

@@ -1,36 +1,89 @@
 # Barbearia E2E
 
-Aplicação full-stack: **Spring Boot** + **React**. Dados em memória (sem banco).
+Aplicação full-stack: **Spring Boot** + **React**. Dados em memória (sem banco de dados).
 
-## Execução rápida (1 comando)
+## Pré-requisitos
+
+- **Java 17+** e **Maven** (backend)
+- **Node.js 18+** (frontend)
+
+## Scripts de execução (Windows)
+
+Na raiz do projeto existem três scripts `.bat`:
+
+### `start.bat` — Aplicação completa (recomendado)
+
+Sobe frontend e backend juntos em **uma única porta**.
+
+1. Instala dependências do frontend (`npm install`), se necessário
+2. Gera o build de produção do React (`npm run build`)
+3. Copia os arquivos para `backend/src/main/resources/static`
+4. Inicia o Spring Boot na porta **8080**
+
+**Acesso:** http://localhost:8080
+
+### `start-backend.bat` — Somente backend
+
+Inicia apenas a API Spring Boot (porta **8080**), sem interface web.
 
 ```bash
-start.bat
+start-backend.bat
 ```
 
-Ou manualmente:
+**Acesso:** http://localhost:8080/api
+
+Use quando quiser rodar o frontend separadamente com hot reload.
+
+### `start-frontend.bat` — Somente frontend (desenvolvimento)
+
+Instala dependências (`npm install`), se necessário, e inicia o Vite em modo dev (porta **5173**).
 
 ```bash
-cd frontend && npm install && npm run build
-xcopy /E /I /Y frontend\dist backend\src\main\resources\static
-cd backend && mvn spring-boot:run
+start-frontend.bat
 ```
 
-Acesse: **http://localhost:8080**
+**Acesso:** http://localhost:5173
 
-## Desenvolvimento (hot reload)
+O Vite faz proxy das chamadas `/api` para `http://localhost:8080`. **O backend precisa estar rodando** (`start-backend.bat` ou `mvn spring-boot:run`).
 
-Terminal 1 — Backend:
+---
+
+## Desenvolvimento com hot reload
+
+Terminal 1:
 ```bash
-cd backend && mvn spring-boot:run
+start-backend.bat
 ```
 
-Terminal 2 — Frontend:
+Terminal 2:
 ```bash
-cd frontend && npm install && npm run dev
+start-frontend.bat
 ```
 
-Acesse: **http://localhost:5173** (proxy para API na porta 8080)
+Acesse: **http://localhost:5173**
+
+---
+
+## Documentação Swagger (OpenAPI)
+
+Com o **backend em execução**, acesse:
+
+| Recurso | URL |
+|---------|-----|
+| **Swagger UI** | http://localhost:8080/swagger-ui.html |
+| **OpenAPI JSON** | http://localhost:8080/v3/api-docs |
+
+### Autenticação nos endpoints admin
+
+1. Execute `POST /api/admin/login` com:
+   ```json
+   { "usuario": "admin", "senha": "admin123" }
+   ```
+2. Copie o `token` da resposta
+3. Clique em **Authorize** no Swagger UI
+4. Informe: `Bearer {seu-token}`
+
+---
 
 ## Credenciais Admin
 
@@ -38,8 +91,23 @@ Acesse: **http://localhost:5173** (proxy para API na porta 8080)
 |---------|-------|
 | admin   | admin123 |
 
+---
+
 ## Funcionalidades
 
 **Cliente:** Home, agendamento (Cabelo R$100, Barba R$100, Combo R$180), pagamento, editar/cancelar até 2h antes, horários 09h–20h, avaliação.
 
 **Admin:** Agendamentos, clientes, serviços/preços, barbeiros, faturamento mensal, cancelamentos, validar avaliações, ranking.
+
+---
+
+## Estrutura
+
+```
+barbearia_e2e/
+├── backend/          # Spring Boot MVC + Swagger
+├── frontend/         # React + Vite
+├── start.bat         # Build + backend (porta 8080)
+├── start-backend.bat # API apenas
+└── start-frontend.bat# Frontend dev (porta 5173)
+```
